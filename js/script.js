@@ -4,7 +4,7 @@
  */
 function addLoadEvent(func) {
     var oldonload = window.onload;
-    if(typeof window.onload != 'function') {
+    if (typeof window.onload != 'function') {
         window.onload = func;
     } else {
         window.onload = function() {
@@ -20,12 +20,12 @@ function addLoadEvent(func) {
  * @return {[元素数组]}           [含有相同类型名的元素数组]
  */
 function getElementsByClassName(className) {
-    if(!document.getElementsByClassName) {
+    if (!document.getElementsByClassName) {
         document.getElementsByClassName = function(className) {
             var ret = [];
             var els = document.getElementsByTagName('*');
-            for(var i = 0, len = els.length; i < len; i++) {
-                if(els[i].className == className || els[i].className.indexOf(className + ' ') != -1 ||
+            for (var i = 0, len = els.length; i < len; i++) {
+                if (els[i].className == className || els[i].className.indexOf(className + ' ') != -1 ||
                     els[i].className.indexOf(' ' + className) != -1 ||
                     els[i].className.indexOf(' ' + className + ' ') != -1) {
                     ret.push(els[i]);
@@ -45,7 +45,6 @@ function selectItem() {
     var trs = cartTable.children[1].rows;
     var checkInputs = document.getElementsByClassName('check');
     //console.log(checkInputs.length);
-    var checkAllInputs = document.getElementsByClassName('check-all');
     var selectedTotal = document.getElementById('selectedTotal');
     var priceTotal = document.getElementById('priceTotal');
     var foot = document.getElementById('foot');
@@ -56,13 +55,13 @@ function selectItem() {
         var selected = 0;
         var price = 0;
         var HTMLstr = '';
-        for (var j=0; j < trs.length; j++){
-            if(trs[j].getElementsByTagName('input')[0].checked) {
+        for (var j = 0; j < trs.length; j++) {
+            if (trs[j].getElementsByTagName('input')[0].checked) {
                 trs[j].className = 'on';
                 selected += parseInt(trs[j].getElementsByTagName('input')[1].value);
                 price += parseFloat(trs[j].cells[4].innerHTML);
-                HTMLstr += '<div><img src="'+ trs[j].getElementsByTagName('img')[0].src +
-                 '"><span  class="del" index="'+ j +'">取消选择</span></div>';
+                HTMLstr += '<div><img src="' + trs[j].getElementsByTagName('img')[0].src +
+                    '"><span  class="del" index="' + j + '">取消选择</span></div>';
             } else {
                 trs[j].className = '';
             }
@@ -77,7 +76,7 @@ function selectItem() {
 
 
 
-    for(var r = 0; r < trs.length; r++) {
+    for (var r = 0; r < trs.length; r++) {
         trs[r].onclick = function(e) {
             e = e || window.event;
             var el = e.srcElement;
@@ -95,10 +94,10 @@ function selectItem() {
                     getsubTotal(this);
                     break;
                 case 'reduce':
-                    if(val > 1 ) {
+                    if (val > 1) {
                         val -= 1;
                     }
-                    if (val <=1 ) {
+                    if (val <= 1) {
                         reduceButton.innerHTML = '';
                     }
                     input.value = val;
@@ -106,7 +105,7 @@ function selectItem() {
                     break;
                 case 'delete':
                     var conf = confirm("确定要删除吗？");
-                    if(conf) {
+                    if (conf) {
                         this.parentNode.removeChild(this);
                     }
 
@@ -115,15 +114,16 @@ function selectItem() {
             }
             getTotal();
         }
+
         trs[r].getElementsByTagName('input')[1].onkeyup = function() {
             var val = parseInt(this.value);
             var tr = this.parentNode.parentNode;
             var reduce = tr.getElementsByTagName('span')[1];
-            if(isNaN(val) || val < 1) {
+            if (isNaN(val) || val < 1) {
                 val = 1;
             }
             this.value = val;
-            if(val <= 1) {
+            if (val <= 1) {
                 reduce.innerHTML = '';
             } else {
                 reduce.innerHTML = '-';
@@ -134,28 +134,28 @@ function selectItem() {
     }
 
 
-    
 
-    for(var i = 0; i < checkInputs.length; i++) {
+
+    for (var i = 0; i < checkInputs.length; i++) {
         checkInputs[i].onclick = function() {
-            if(this.className == 'check-all check') {
+            if (this.className == 'check-all check') {
                 //console.log(1)
-                for(var n = 0; n < checkInputs.length; n++) {
+                for (var n = 0; n < checkInputs.length; n++) {
                     checkInputs[n].checked = this.checked;
                 }
             }
-            if(this.checked == false) {
+            if (this.checked == false) {
                 //console.log(2);
-                for(var k=0; k < checkAllInputs.length; k++) {
+                for (var k = 0; k < checkAllInputs.length; k++) {
                     checkAllInputs[k].checked = false;
                 }
             }
             getTotal();
-         }
+        }
     }
 
     selected.onclick = function() {
-        if(foot.className == 'foot' && parseInt(selectedTotal.innerHTML) != 0) {
+        if (foot.className == 'foot' && parseInt(selectedTotal.innerHTML) != 0) {
             foot.className = 'foot show';
         } else {
             foot.className = 'foot';
@@ -165,7 +165,7 @@ function selectItem() {
     selectedViewList.onclick = function(e) {
         e = e || window.event;
         var el = e.srcElement;
-        if(el.className == 'del') {
+        if (el.className == 'del') {
             var index = el.getAttribute('index');
             var input = trs[index].getElementsByTagName('input')[0];
             input.checked = false;
@@ -174,33 +174,34 @@ function selectItem() {
     }
 
     deleteAll.onclick = function() {
-        if(selectedTotal.innerHTML != 0){
+        if (selectedTotal.innerHTML != 0) {
             var conf = confirm("确定要删除吗？");
             if (conf) {
-            for (var i = 0; i < trs.length; i++) {
-                var input = trs[i].getElementsByTagName('input')[0];
-                if(input.checked) {
-                    trs[i].parentNode.removeChild(trs[i]);
-                    i--;
+                for (var i = 0; i < trs.length; i++) {
+                    var input = trs[i].getElementsByTagName('input')[0];
+                    if (input.checked) {
+                        trs[i].parentNode.removeChild(trs[i]);
+                        i--;
+                    }
                 }
             }
-         }
         }
-         
+
     }
 
 
 }
 
 function getsubTotal(tr) {
-        var tds = tr.cells;
-        var price = parseFloat(tds[2].innerHTML);
-        var count = parseFloat(tr.getElementsByTagName('input')[1].value);
-        var subTatal = parseFloat(price * count);
-        tds[4].innerHTML = subTatal.toFixed(2);
-    }
-   
+    var tds = tr.cells;
+    var price = parseFloat(tds[2].innerHTML);
+    var count = parseFloat(tr.getElementsByTagName('input')[1].value);
+    var subTatal = parseFloat(price * count);
+    tds[4].innerHTML = subTatal.toFixed(2);
+}
+
+
+
 
 
 addLoadEvent(selectItem);
-
